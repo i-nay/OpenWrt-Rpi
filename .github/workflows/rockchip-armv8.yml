@@ -18,7 +18,7 @@ on:
 env:
   CONFIG_FILE: config/rockchip/armv8.config
   SOURCE_URL: https://github.com/immortalwrt/immortalwrt
-  SOURCE_BRANCH: openwrt-18.06-k5.4
+  SOURCE_BRANCH: openwrt-23.05
   DIY_SH: scripts/custom.sh
   TOOLCHAIN_TAG: toolchain
   TOOLCHAIN_RELEASE_UPLOAD: true
@@ -162,7 +162,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ env.TOOLCHAIN_TAG }}
-          assets: "toolchain-${{ env.TOOLCHAIN_IMAGE }}.*"
+          assets: 'toolchain-${{ env.TOOLCHAIN_IMAGE }}.*'
           fail-if-no-assets: false
           fail-if-no-release: false
 
@@ -423,10 +423,10 @@ jobs:
 
       - name: Deploy Files To HostHatch Node
         env:
-          HOST: "${{ secrets.REMOTE_USER }}@${{ secrets.HOSTHATCH_IP }}"
-          SOURCE_TARGETS: "${{ env.OPENWRT_ROOT_PATH }}/bin/targets/${{ env.DEVICE_TARGET }}/${{ env.DEVICE_SUBTARGET }}/"
-          DEST_TARGETS: "${{ env.WEB_ROOT_PATH }}/releases/targets/${{ env.DEVICE_TARGET }}/${{ env.DEVICE_SUBTARGET }}/"
-          REMOTE_PRIVATEKEY: "${{ secrets.HOSTHATCH_PRIVATEKEY }}"
+          HOST: '${{ secrets.REMOTE_USER }}@${{ secrets.HOSTHATCH_IP }}'
+          SOURCE_TARGETS: '${{ env.OPENWRT_ROOT_PATH }}/bin/targets/${{ env.DEVICE_TARGET }}/${{ env.DEVICE_SUBTARGET }}/'
+          DEST_TARGETS: '${{ env.WEB_ROOT_PATH }}/releases/targets/${{ env.DEVICE_TARGET }}/${{ env.DEVICE_SUBTARGET }}/'
+          REMOTE_PRIVATEKEY: '${{ secrets.HOSTHATCH_PRIVATEKEY }}'
         if: env.REMOTE_PRIVATEKEY != null
         run: |
           mkdir -p ~/.ssh/
@@ -439,10 +439,10 @@ jobs:
 
       - name: Deploy Files To Backblaze
         env:
-          B2_APPLICATION_KEY: "${{ secrets.B2_APPLICATION_KEY }}"
-          B2_APPLICATION_KEY_ID: "${{ secrets.B2_APPLICATION_KEY_ID }}"
-          SOURCE_TARGETS: "${{ env.OPENWRT_ROOT_PATH }}/bin/targets/${{ env.DEVICE_TARGET }}/${{ env.DEVICE_SUBTARGET }}/"
-          DEST_TARGETS: "b2://${{ secrets.B2_BUCKETNAME }}/releases/targets/${{ env.DEVICE_TARGET }}/${{ env.DEVICE_SUBTARGET }}/"
+          B2_APPLICATION_KEY: '${{ secrets.B2_APPLICATION_KEY }}'
+          B2_APPLICATION_KEY_ID: '${{ secrets.B2_APPLICATION_KEY_ID }}'
+          SOURCE_TARGETS: '${{ env.OPENWRT_ROOT_PATH }}/bin/targets/${{ env.DEVICE_TARGET }}/${{ env.DEVICE_SUBTARGET }}/'
+          DEST_TARGETS: 'b2://${{ secrets.B2_BUCKETNAME }}/releases/targets/${{ env.DEVICE_TARGET }}/${{ env.DEVICE_SUBTARGET }}/'
         if: env.B2_APPLICATION_KEY != null && env.B2_APPLICATION_KEY_ID != null
         run: |
           sudo wget -q -O /bin/b2 https://github.com/Backblaze/B2_Command_Line_Tool/releases/latest/download/b2-linux
@@ -458,7 +458,7 @@ jobs:
           tag: ${{ env.DEVICE_TARGET }}-${{ env.DEVICE_SUBTARGET }}
           fail-if-no-assets: false
           fail-if-no-release: false
-          assets: "*"
+          assets: '*'
 
       - name: Deploy Files To Release
         uses: ncipollo/release-action@v1.8.0
